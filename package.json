@@ -4,11 +4,14 @@
   "description": "Checkin telegram bot by @200kph",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "start:watch": "nodemon dist/index.js",
-    "run:dev": "npm run compile:watch | npm run start:watch ",
+    "postinstall": "npm run compile",
+    "start": "node ./dist/index.js",
+    "start:watch": "nodemon ./dist/index.js",
+    "dev": "npm run compile:watch | npm run start:watch",
     "compile": "tsc",
     "compile:watch": "npm run compile -- -w",
+    "lint": "tslint -c tslint.json 'src/**/*.ts'",
+    "lint:fix": "npm run lint -- --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,11 +32,22 @@
   },
   "homepage": "https://github.com/AlexanderSergan/checkin-telegram-bot#readme",
   "dependencies": {
+    "@types/mongoose": "^5.3.3",
     "@types/node-telegram-bot-api": "^0.30.3",
-    "node-telegram-bot-api": "^0.30.0"
+    "moment": "^2.22.2",
+    "mongoose": "^5.3.14",
+    "node-telegram-bot-api": "^0.30.0",
+    "rxjs": "^6.3.3"
   },
   "devDependencies": {
+    "husky": "^1.1.4",
     "nodemon": "^1.18.6",
-    "tslint": "^5.11.0"
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.6"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint:fix"
+    }
   }
 }
